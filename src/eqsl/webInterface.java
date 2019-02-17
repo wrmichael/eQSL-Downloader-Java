@@ -28,9 +28,7 @@ public class webInterface {
         public String myStartMonth = "01";
         public String myEndMonth = "06";
         
-        //public String eUserName = "ac9hp";
-        //public String ePassword = "abc123#";
-       
+        
 	private final String USER_AGENT = "Mozilla/5.0";
         private String callsign;            
         private String Password;
@@ -126,14 +124,7 @@ public class webInterface {
         public void login()
         {
                 
-                try 
-                {
-                    //eUserName = URLEncoder.encode("ac9hp", "UTF-8");
-                    //ePassword = URLEncoder.encode("abc123#", "UTF-8");
-                } catch (Exception ex )
-                {
-                    System.out.print(ex.toString());
-                }
+               
             
             try 
             {
@@ -510,8 +501,6 @@ The following parameters are required:
             
             try
             {
-                eUserName = URLEncoder.encode("ac9hp", "UTF-8");
-                ePassword = URLEncoder.encode("abc123#", "UTF-8");
             
                 obj = new URL("http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + eUserName + "&Password=" + ePassword + "&RcvdSince=20170201");
          
@@ -566,8 +555,6 @@ The following parameters are required:
             
             try
             {
-                //eUserName = this.getCallsign(); //URLEncoder.encode("ac9hp", "UTF-8");
-                //ePassword = this.getPassword(); //URLEncoder.encode("abc123#", "UTF-8");
                 
                 String sUrl = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + this.getCallsign() + "&Password=" + this.getPassword() + "&RcvdSince=" + this.myStartYear + this.myStartMonth + "01&ConfirmedOnly=1"; //20170201";
                 
