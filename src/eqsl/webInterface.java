@@ -556,13 +556,15 @@ The following parameters are required:
             try
             {
                 
-                String sUrl = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + this.getCallsign() + "&Password=" + this.getPassword() + "&RcvdSince=" + this.myStartYear + this.myStartMonth + "01&ConfirmedOnly=1"; //20170201";
+                String sUrl = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + this.getCallsign() + "&Password=" + this.getPassword() + "&RcvdSince=" + this.myStartYear + this.myStartMonth + "01&ConfirmedOnly=1&Archive=0"; //20170201";
                 
                 if (this.archive)
                 {
-                    sUrl += "&Archive=1";
+                    sUrl = "http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + this.getCallsign() + "&Password=" + this.getPassword() + "&RcvdSince=" + this.myStartYear + this.myStartMonth + "01&ConfirmedOnly=1&Archive=1"; //20170201";
+                    //sUrl += "&Archive=1";
                 }
                 
+                logit("Using this URL to get logbook:\r\n" + sUrl);
                 
                 //System.out.println(sUrl);
                 obj = new URL(sUrl);
