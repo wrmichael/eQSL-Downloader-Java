@@ -180,7 +180,7 @@ public class webInterface {
 	// HTTP POST request
 	private String sendPost(String myURL, String myParameters) throws Exception {
 
-		String url = myURL; //"https://selfsolve.apple.com/wcResults.do";
+		String url = myURL; 
 		URL obj = new URL(url);
 		HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
 
@@ -189,7 +189,7 @@ public class webInterface {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 
-		String urlParameters = myParameters; //"sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
+		String urlParameters = myParameters; 
 		
 		// Send post request
 		con.setDoOutput(true);
@@ -199,10 +199,7 @@ public class webInterface {
 		wr.close();
 
 		int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'POST' request to URL : " + url);
-		//System.out.println("Post parameters : " + urlParameters);
-		//System.out.println("Response Code : " + responseCode);
-
+		
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
 		String inputLine;
@@ -213,9 +210,7 @@ public class webInterface {
 		}
 		in.close();
 		
-		//print result
-		//System.out.println(response.toString());
-                return response.toString();
+		return response.toString();
 	}
         
         public void downloadAndParseLog(String html)
@@ -223,30 +218,21 @@ public class webInterface {
             //html = html.toUpperCase();            
             if (-1 == html.toUpperCase().indexOf(".ADI"))
             {
-                //System.out.println(html.toUpperCase().indexOf(".ADI"));
-                
-                //System.out.println("No ADI file listed");
                 return;
             }
             try {
-                //<A HREF="downloadedfiles/ACWH436338.adi">
                 Thread.sleep(3000);
             } catch (InterruptedException ex) {
-                //Logger.getLogger(webInterface.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
             //this.logit(html);
             String tempStr = html.split("downloadedfiles/")[1];
             tempStr = tempStr.substring(0,tempStr.indexOf(".adi"));
-           // System.out.print("filename: " + tempStr);
             
             String sUrl = "http://www.eqsl.cc/qslcard/downloadedfiles/" + tempStr + ".adi";
-            //System.out.println(sUrl);
-            //this.logit("Downloding from: " + sUrl);
             
             String t = getFile(sUrl);
-            
-              //System.out.print(t);
-              
+               
               parseADFI(t);
             return;
         }
@@ -492,57 +478,7 @@ The following parameters are required:
         {
             ProcessDownload();
             return;
-            //URL url=null;
-        /*
-            URL obj = null; //new URL(url);
             
-            HttpURLConnection con = null; 
-
-            
-            try
-            {
-            
-                obj = new URL("http://www.eqsl.cc/qslcard/DownloadInBox.cfm?UserName=" + eUserName + "&Password=" + ePassword + "&RcvdSince=20170201");
-         
-                con =(HttpURLConnection) obj.openConnection();
-                } catch (Exception ex)
-            {
-                System.out.print(ex.toString());
-            }
-
-            
-        
-	try
-        {
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
-		int responseCode = con.getResponseCode();
-		//System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-		        new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
-		}
-		in.close();
-
-		//print result
-		System.out.println(response.toString());
-                downloadAndParseLog(response.toString());
-                
-        } catch (Exception ex)
-        {
-            System.out.print(ex.toString());
-        }
-            */
 }
         
     public void ProcessDownload()
@@ -719,20 +655,7 @@ The following parameters are required:
                     Params = "Reject=0&LimitDateLo=" + myStartYear + " " + myStartMonth + "&LimitDateHi=" + myEndYear + " " + myEndMonth;
                 }
                 String html = sendPost(INBOX_URL,Params);
-                //System.out.print(html);
+        
 	}
 
 }
-
-
-/**
- *
- * @author root
- */
-/*
-public class webInterface {
-    
-    string EQSL_LOGIN = "";
-    
-    
-}*/
