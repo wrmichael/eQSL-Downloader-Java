@@ -410,6 +410,32 @@ The following parameters are required:
                     double quotes --><!-- The .. should be replaced with https://www.eQSL.cc in the full URL specification -->
                     <img src="/CFFileServlet/_cf_image/_cfimg-155518818509243536.PNG" alt="" /><!-- End of the eQSL file location -->
                     */
+                    if (myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
+                    {
+                        do 
+                        {
+                            // we have an issue and we are goign too fast..  
+                            // pause 
+                            Thread.sleep(10000);
+                            myr = sendPost("https://www.eqsl.cc/QSLCard/GeteQSL.cfm?" + myq,""); 
+                            if (!myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
+                            {
+                                break;
+                            }
+                        }
+                        while (true);
+                    }
+                    
+                    if (myr.contains("ERROR: eQSL Graphic not available - Contact the Sender of this eQSL"))
+                    {
+                        //not recoverable 
+                        //card does not exist
+                        // TODO add error counter 
+                        logit("QSL Card does not exist. contact user");
+                        //return because we cannot go on. 
+                        return;
+                    }
+                    
                     
                     myr = myr.substring(myr.indexOf("img src=")+9);
               //      this.logit(myr);
