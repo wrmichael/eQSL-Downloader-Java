@@ -24,7 +24,7 @@ public class webInterface {
 
         public boolean archive = false;
         public String myStartYear = "2018";
-        public String myEndYear = "2018";
+        public String myEndYear = "2020";
         public String myStartMonth = "01";
         public String myEndMonth = "06";
         
@@ -52,6 +52,15 @@ public class webInterface {
         return callsign;
     }
 
+    public void setDates(String sm, String sy, String em, String ey)
+    {
+        myEndMonth = em;
+        myEndYear = ey;
+        myStartYear = sy;
+        myStartMonth = sm;
+        
+    }
+    
     /**
      * Set the value of string
      *
@@ -285,7 +294,7 @@ The following parameters are required:
 
         
         do{
-            int idx = current_adfi.indexOf("EOR") +4;
+            int idx = current_adfi.indexOf("EOR") + 4;
     
             if (idx<5)
             {
@@ -324,7 +333,7 @@ The following parameters are required:
                         if (field.equals("CALL"))
                         {
                             died = "4";
-                            QSO_Call = value;
+                            QSO_Call = value.trim();
                         }
                         if (field.equals("MODE"))
                         {
@@ -389,7 +398,7 @@ The following parameters are required:
             
             //this.logit("Download = " + this.DownloadPath + " -- " + success);
             
-            String myfile  = this.DownloadPath + myqp.replace("&","_").replace(":", "").replace("-","").replace("=","");
+            String myfile  = this.DownloadPath + myqp.replace("&","_").replace(":", "").replace("-","").replace("=","").replace("/","-").replace("\"","-");
             
             this.logit("Downloading: " + myfile);
             File tmpf = new File(myfile);
@@ -431,38 +440,39 @@ The following parameters are required:
                         //not recoverable 
                         //card does not exist
                         // TODO add error counter 
-                        logit("QSL Card does not exist. contact user");
-                        //return because we cannot go on. 
-                        return;
-                    }
-                    
-                    
-                    myr = myr.substring(myr.indexOf("img src=")+9);
-              //      this.logit(myr);
-                    myr = myr.substring(0,myr.indexOf("\""));
-              //      this.logit(myr);
-                    myr = "https://www.eQSL.cc" + myr;
-              //      this.logit(myr);
-                    
-                    
-                    URL url = new URL(myr);
-                    InputStream in = new BufferedInputStream(url.openStream());
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    byte[] buf = new byte[1024];
-                    int n = 0;
-                    while (-1!=(n=in.read(buf)))
+                        logit("===>  QSL Card does not exist. contact user " + QSO_Call +"  <===");
+                        
+                        
+                    }else
                     {
-                       out.write(buf, 0, n);
-                    }
-                    out.close();
-                    in.close();
-                    byte[] response = out.toByteArray();
                     
                     
-                    FileOutputStream fos = new FileOutputStream(myfile);
-                    fos.write(response);
-                    fos.close();
+                        myr = myr.substring(myr.indexOf("img src=")+9);
+                  //      this.logit(myr);
+                        myr = myr.substring(0,myr.indexOf("\""));
+                  //      this.logit(myr);
+                        myr = "https://www.eQSL.cc" + myr;
+                  //      this.logit(myr);
 
+
+                        URL url = new URL(myr);
+                        InputStream in = new BufferedInputStream(url.openStream());
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        byte[] buf = new byte[1024];
+                        int n = 0;
+                        while (-1!=(n=in.read(buf)))
+                        {
+                           out.write(buf, 0, n);
+                        }
+                        out.close();
+                        in.close();
+                        byte[] response = out.toByteArray();
+
+
+                        FileOutputStream fos = new FileOutputStream(myfile);
+                        fos.write(response);
+                        fos.close();
+                    }
                     //return;
                     java.lang.Thread.sleep(10500);
                 } catch (Exception ex) 
@@ -526,6 +536,8 @@ The following parameters are required:
                     //sUrl += "&Archive=1";
                 }
                 
+                
+                System.out.println("URL:" + sUrl.replace(this.getPassword(),"****"));
                 logit("Using this URL to get logbook:\r\n" + sUrl);
                 
                 //System.out.println(sUrl);

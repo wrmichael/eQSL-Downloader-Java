@@ -141,26 +141,25 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
             }
         });
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yy"))));
-        jFormattedTextField1.setText("01/01/2012");
+        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        jFormattedTextField1.setText("01/01/1990");
 
         jLabel4.setText("Date from");
 
-        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yy"))));
-        jFormattedTextField2.setText("01/01/2012");
+        jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("MM/dd/yyyy"))));
+        jFormattedTextField2.setText("01/01/2020");
         jFormattedTextField2.setEnabled(false);
 
         jLabel5.setText("AND ");
 
         jCheckBox1.setText("Archive");
-        jCheckBox1.setOpaque(false);
         jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBox1ActionPerformed(evt);
             }
         });
 
-        jLabel6.setText("Version 1.4");
+        jLabel6.setText("Version 20200104");
 
         jLabel7.setText("Written by Wayne Michael AC9HP 2019");
 
@@ -196,22 +195,10 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jButton2)
-                                            .addGap(20, 20, 20)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel4)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(154, 154, 154)
-                                        .addComponent(jLabel8))
+                                        .addComponent(jButton2)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -229,8 +216,21 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jButton5))
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                            .addGap(154, 154, 154)
+                                            .addComponent(jLabel8))))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -288,6 +288,8 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
         //wi.archive = jCheckBox1.isSelected();
        //wi.login();
        
+       //System.out.println(jFormattedTextField1.getText())
+       
        jLabel8.setText("Downloading");
        jLabel8.updateUI();
        jTextField2.setText(jTextField2.getText().trim());
@@ -300,6 +302,32 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
                     @Override
                     public void run() {
                         webInterface wi = new webInterface();
+                        try 
+                        {
+                           String em;
+                            em = jFormattedTextField2.getText().split("/")[0];
+                            String ey;
+                            ey = jFormattedTextField2.getText().split("/")[2];
+                           
+                            String sm;
+                            sm = jFormattedTextField1.getText().split("/")[0];
+                            String sy;
+                            sy = jFormattedTextField1.getText().split("/")[2];
+                           
+                            System.out.println(sm + '/' + sy + "/" + em + "/" + ey);
+                            
+                            wi.setDates(sm,sy,em,ey);
+                            
+                            //wi.myEndMonth = mm;
+                            //wi.myEndYear = yy;
+                            
+                            //wi.myStartMonth = sm;
+                            //wi.myStartYear = sy;
+                            
+                        } catch (Exception ex1)
+                        {
+                        
+                        }
                         wi.setCallsign(jTextField1.getText().trim());                    
                         wi.setPassword(String.valueOf(jPasswordField1.getPassword()).trim());
                         wi.setDownloadPath(jTextField2.getText().trim());
@@ -329,7 +357,7 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
         //System.out.print(newDate);
 
         Date dt = new Date(); 
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
         jFormattedTextField2.setText(sdf.format(dt));
 
