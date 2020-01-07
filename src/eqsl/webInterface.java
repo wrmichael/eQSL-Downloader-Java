@@ -410,6 +410,8 @@ The following parameters are required:
             {
                 String myr="";
                 //download
+                String error_download_idx = "0";
+                
                 try 
                 {
                     //this.logit("https://www.eqsl.cc/QSLCard/GeteQSL.cfm?" + myq);
@@ -419,73 +421,99 @@ The following parameters are required:
                     double quotes --><!-- The .. should be replaced with https://www.eQSL.cc in the full URL specification -->
                     <img src="/CFFileServlet/_cf_image/_cfimg-155518818509243536.PNG" alt="" /><!-- End of the eQSL file location -->
                     */
-                    if (myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
+                    if (myr.trim().length() > 0)
                     {
-                        do 
+                        error_download_idx = "2";
+                        if (myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
                         {
-                            // we have an issue and we are goign too fast..  
-                            // pause 
-                            Thread.sleep(10000);
-                            myr = sendPost("https://www.eqsl.cc/QSLCard/GeteQSL.cfm?" + myq,""); 
-                            if (!myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
+                            error_download_idx = "4";
+                            do 
                             {
-                                break;
+                                // we have an issue and we are goign too fast..  
+                                // pause 
+                                Thread.sleep(10000);
+                                myr = sendPost("https://www.eqsl.cc/QSLCard/GeteQSL.cfm?" + myq,""); 
+                                if (!myr.contains("ERROR - Too many queries overloading the system. Slow down! "))
+                                {
+                                    break;
+                                }
                             }
+                            while (true);
                         }
-                        while (true);
-                    }
+                        error_download_idx = "30";
                     
-                    if (myr.contains("ERROR: eQSL Graphic not available - Contact the Sender of this eQSL"))
-                    {
-                        //not recoverable 
-                        //card does not exist
-                        // TODO add error counter 
-                        logit("===>  QSL Card does not exist. contact user " + QSO_Call +"  <===");
-                        
-                        
-                    }else
-                    {
-                    
-                    
-                        myr = myr.substring(myr.indexOf("img src=")+9);
-                  //      this.logit(myr);
-                        myr = myr.substring(0,myr.indexOf("\""));
-                  //      this.logit(myr);
-                        myr = "https://www.eQSL.cc" + myr;
-                  //      this.logit(myr);
-
-
-                        URL url = new URL(myr);
-                        InputStream in = new BufferedInputStream(url.openStream());
-                        ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        byte[] buf = new byte[1024];
-                        int n = 0;
-                        while (-1!=(n=in.read(buf)))
+                        if (myr.contains("ERROR: eQSL Graphic not available - Contact the Sender of this eQSL"))
                         {
-                           out.write(buf, 0, n);
+                            error_download_idx = "40";
+                            //not recoverable 
+                            //card does not exist
+                            // TODO add error counter 
+                            logit("===>  QSL Card does not exist. contact user " + QSO_Call +"  <===");
+                        
+                        
+                        }else
+                        {
+                            error_download_idx = "50";
+                    
+                            if ( myr.contains("ERROR:"))
+                            {
+                                logit("===>  Last chance error: " + myr);
+                                error_download_idx = "60";
+                    
+                            }
+                            else
+                            {
+                                error_download_idx = "70";
+                    
+                                myr = myr.substring(myr.indexOf("img src=")+9);
+                                //      this.logit(myr);
+                                myr = myr.substring(0,myr.indexOf("\""));
+                                //      this.logit(myr);
+                                myr = "https://www.eQSL.cc" + myr;
+                                //      this.logit(myr);
+
+                                error_download_idx = "80";
+                    
+                                // sleep for a second.. 
+                                java.lang.Thread.sleep(100);
+                                URL url = new URL(myr);
+                                InputStream in = new BufferedInputStream(url.openStream());
+                                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                                byte[] buf = new byte[1024];
+                                int n = 0;
+                                error_download_idx = "800";
+                                while (-1!=(n=in.read(buf)))
+                                {
+                                   out.write(buf, 0, n);
+                                }
+                                out.close();
+                                in.close();
+                                byte[] response = out.toByteArray();
+
+                                error_download_idx = "900";
+                                FileOutputStream fos = new FileOutputStream(myfile);
+                                fos.write(response);
+                                fos.close();
+                            }
+                        
                         }
-                        out.close();
-                        in.close();
-                        byte[] response = out.toByteArray();
-
-
-                        FileOutputStream fos = new FileOutputStream(myfile);
-                        fos.write(response);
-                        fos.close();
+                    } else
+                    {
+                     this.logit("blank myr parseADI");
+                   
                     }
                     //return;
+                    error_download_idx = "1000";
                     java.lang.Thread.sleep(10500);
                 } catch (Exception ex) 
                 {
-                    this.logit("failure parseADI" + ex.toString());
-                    return;
+                    this.logit("failure parseADI(" + error_download_idx  + ")" + ex.toString());
+                    //java.lang.Thread.sleep(10500);
+                    
                 }
+            }
                 //return;
                 //this.logit(myqp);
-            }
-
-            
-            
             
             current_adfi = current_adfi.substring(idx);
             //logit("[" + current_qso + "]");
