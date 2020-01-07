@@ -159,7 +159,7 @@ public class loginScreen extends javax.swing.JPanel  implements ActionListener  
             }
         });
 
-        jLabel6.setText("Version 20200104");
+        jLabel6.setText("Version 2020010601");
 
         jLabel7.setText("Written by Wayne Michael AC9HP 2019");
 
