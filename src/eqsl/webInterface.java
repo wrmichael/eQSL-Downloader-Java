@@ -281,6 +281,17 @@ The following parameters are required:
         ArrayList<String> mylist = new ArrayList<String>();
         
   
+        try 
+        {
+            //kill log file.. 
+            File f = new File(this.DownloadPath + "applicationlog.txt");
+            f.delete();
+            
+        }catch (Exception ex)
+        {
+        //ignore
+        }
+        
         int calllength = 0;
         
         this.logit("start\n");
